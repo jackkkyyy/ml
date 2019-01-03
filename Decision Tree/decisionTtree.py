@@ -91,7 +91,6 @@ def chooseBestFeatureToSplit(dataSet):
             subDataSet = splitDataSet(dataSet, i, value)
             #subDataSet划分后的子集
             prob = len(subDataSet) / float(len(dataSet))           #计算子集的概率
-            print(prob)
             newEntropy += prob * calcShannonEnt(subDataSet)     #根据公式计算经验条件熵
         infoGain = baseEntropy - newEntropy                     #信息增益
         print("第%d个特征的增益为%.3f" % (i, infoGain))            #打印每个特征的信息增益
