@@ -52,10 +52,6 @@ def file2matrix(filename):
 Parameters:
     datingDataMat - 特征矩阵
     datingLabels - 分类Label
-Returns:
-    无
-Modify:
-    2017-03-24
 """
 def showdatas(datingDataMat, datingLabels):
     #设置汉字格式
@@ -146,9 +142,6 @@ Parameters:
     k - kNN算法参数,选择距离最小的k个点
 Returns:
     sortedClassCount[0][0] - 分类结果
-
-Modify:
-    2017-03-24
 """
 
 def classify0(inX, dataSet, labels, k):
@@ -189,9 +182,6 @@ Returns:
     normDataSet - 归一化后的特征矩阵
     ranges - 数据范围
     minVals - 数据最小值
-
-Modify:
-    2017-03-24
 """
 def autoNorm(dataSet):
     #获得数据的最小值
@@ -219,9 +209,6 @@ Returns:
     normDataSet - 归一化后的特征矩阵
     ranges - 数据范围
     minVals - 数据最小值
-
-Modify:
-    2017-03-24
 """
 def datingClassTest():
     #打开的文件名
@@ -248,16 +235,6 @@ def datingClassTest():
             errorCount += 1.0
     print("错误率:%f%%" %(errorCount/float(numTestVecs)*100))
 
-"""
-函数说明:main函数
 
-Parameters:
-    无
-Returns:
-    无
-
-Modify:
-    2017-03-24
-"""
 if __name__ == '__main__':
     datingClassTest()
