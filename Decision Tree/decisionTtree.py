@@ -89,8 +89,6 @@ def chooseBestFeatureToSplit(dataSet):
         newEntropy = 0.0                                  #经验条件熵
         for value in uniqueVals:                         #计算信息增益
             subDataSet = splitDataSet(dataSet, i, value)
-            print("*"*50)
-            print(subDataSet)
             #subDataSet划分后的子集
             prob = len(subDataSet) / float(len(dataSet))           #计算子集的概率
             print(prob)
