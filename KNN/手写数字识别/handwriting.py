@@ -44,6 +44,7 @@ def handwritingClassTest():
         #将每一个文件的1x1024数据存储到trainingMat矩阵中
         trainingMat[i,:] = img2vector('trainingDigits/%s' % fileNameStr)
     # 构建kNN分类器 参数如下：
+    # neigh = kNN(n_neighbors=5, weights='uniform', algorithm='auto', leaf_size=30,p=2, metric=’minkowski’, metric_params=None, n_jobs=1)
     # n_neighbors：默认为5，就是k-NN的k的值
     # weights：默认是uniform，参数可以是uniform（均等的权重）、distance（不均等的权重）
     # algorithm：快速k近邻搜索算法，默认为auto 搜索算法ball_tree、kd_tree、brute
