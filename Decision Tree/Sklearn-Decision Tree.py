@@ -38,7 +38,7 @@ if __name__ == '__main__':
 						class_names = clf.classes_,
 						filled=True, rounded=True,
 						special_characters=True)
-	graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
-	graph.write_pdf("tree.pdf")												#保存绘制好的决策树，以PDF的形式存储。
+	# graph = pydotplus.graph_from_dot_data(dot_data.getvalue())
+	# graph.write_pdf("tree.pdf")												#保存绘制好的决策树，以PDF的形式存储。
 
 	print(clf.predict([[1,1,1,0]]))											#预测
