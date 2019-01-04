@@ -65,7 +65,7 @@ def splitDataSet(dataSet, axis, value):
     for featVec in dataSet:                             #遍历数据集
         if featVec[axis] == value:
             reducedFeatVec = featVec[:axis]                #去掉axis特征
-            reducedFeatVec.extend(featVec[axis+1:])     #将符合条件的添加到返回的数据集
+            reducedFeatVec.extend(featVec[axis+1:])   #将符合条件的添加到返回的数据集
             retDataSet.append(reducedFeatVec)
     return retDataSet                                      #返回划分后的数据集
 
@@ -87,7 +87,7 @@ def chooseBestFeatureToSplit(dataSet):
         featList = [example[i] for example in dataSet]
         uniqueVals = set(featList)                         #创建set集合{},元素不可重复
         newEntropy = 0.0                                  #经验条件熵
-        for value in uniqueVals:                         #计算信息增益
+        for value in uniqueVals:
             subDataSet = splitDataSet(dataSet, i, value)
             #subDataSet划分后的子集
             prob = len(subDataSet) / float(len(dataSet))           #计算子集的概率
@@ -173,7 +173,6 @@ Returns:
 """
 def createTree(dataSet, labels, featLabels):
     classList = [example[-1] for example in dataSet]            #取分类标签(是否放贷:yes or no)
-    print(classList)
     if classList.count(classList[0]) == len(classList):            #如果类别完全相同则停止继续划分
         return classList[0]
     if len(dataSet[0]) == 1:                                    #遍历完所有特征时返回出现次数最多的类标签
