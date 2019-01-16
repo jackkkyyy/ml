@@ -80,6 +80,7 @@ Returns:
 def chooseBestFeatureToSplit(dataSet):
     numFeatures = len(dataSet[0]) - 1                    #特征数量
     baseEntropy = calcShannonEnt(dataSet)                 #计算数据集的香农熵
+    print("baseEntropy值为：",baseEntropy)
     bestInfoGain = 0.0                                  #信息增益
     bestFeature = -1                                    #最优特征的索引值
     for i in range(numFeatures):                         #遍历所有特征
@@ -91,9 +92,10 @@ def chooseBestFeatureToSplit(dataSet):
             subDataSet = splitDataSet(dataSet, i, value)
             #subDataSet划分后的子集
             prob = len(subDataSet) / float(len(dataSet))           #计算子集的概率
-            newEntropy += prob * calcShannonEnt(subDataSet)     #根据公式计算经验条件熵
+            k = calcShannonEnt(subDataSet)
+            newEntropy += (prob * k)                              #根据公式计算经验条件熵
         infoGain = baseEntropy - newEntropy                     #信息增益
-        print("第%d个特征的增益为%.3f" % (i, infoGain))            #打印每个特征的信息增益
+        print("------第%d个特征的增益为%.3f" % (i, infoGain))            #打印每个特征的信息增益
         if infoGain > bestInfoGain:                             #计算信息增益
             bestInfoGain = infoGain                             #更新信息增益，找到最大的信息增益
             bestFeature = i                                     #记录信息增益最大的特征的索引值

@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import numpy as np
 import operator
+from math import log
 
 
 """
@@ -26,6 +27,10 @@ def createDataSet():
     labels = ['年龄', '有工作', '有自己的房子', '信贷情况']  # 分类属性
     return dataSet, labels  # 返回数据集和分类属性
 
+
+"""
+计算香浓熵
+"""
 def calcShannonEnt(dataSet):
     dataSize = len(dataSet)
     # 获取标签值 放入字典
@@ -40,9 +45,9 @@ def calcShannonEnt(dataSet):
     shannonEnt = 0.0
     for key in classLables:
         # 计算所有标签出现的频率
-        prop = float(classLables[key]/dataSize)
+        prop = float(classLables[key])/dataSize
         # 计算香浓熵
-        shannonEnt -= prop * np.log2(prop)
+        shannonEnt -= prop * log(prop, 2)
     return shannonEnt
 
 
@@ -63,7 +68,7 @@ def splitDataSet(dataSet,index,value):
             # music_media.extend(sequence) 把一个序列seq的内容添加到列表中 (跟 += 在list运用类似， music_media += sequence)
             # [index+1:]表示从跳过 index 的 index+1行，取接下来的数据
             # 收集结果值 index列为value的行【该行需要排除index列】TODO 此处不知道为什么排除index列
-            reduceVect.extend(data[:index+1])
+            reduceVect.extend(data[index+1:])
             returnSet.append(reduceVect)
     return returnSet
 
@@ -85,15 +90,18 @@ def chooseBestFeature(dataSet):
         featList = [example[i] for example in dataSet]
         # 特征值去重
         uniqueVals = set(featList)
+        newEntropy = 0.0
         for value in uniqueVals:
             # 获取每个特征值的数量
             subDataSet = splitDataSet(dataSet,i,value)
             # 计算每个特征的概率
             prop = len(subDataSet)/float(len(dataSet))
             # 计算经验熵
-            newEntropy += prop * calcShannonEnt(subDataSet)
+            k = calcShannonEnt(subDataSet)
+            newEntropy += (prop * k)  # 根据公式计算经验条件熵
         # 计算信息增益
         infoGain = baseEntory - newEntropy
+        print("------第%d个特征的增益为%.3f" % (i, infoGain))
         # 比较信息增益
         if infoGain > bestInfoGain:
             bestInfoGain = infoGain
@@ -148,7 +156,7 @@ def createTree(dataSet, labels, featLabels):
         subLables = labels[:]
         # 遍历当前选择特征包含的所有属性值，在每个数据集划分上递归调用函数createTree()
         myTree[bestFeatlabel][value] = createTree(splitDataSet(dataSet, bestFeat, value), subLables, featLabels)
-    print(myTree)
+   # print(myTree)
     return myTree
 
 
@@ -162,7 +170,7 @@ def classify(inputTree, featLabels, testVec):
     # 测试数据，找到根节点对应的label位置，也就知道从输入的数据的第几位来开始分类
     key = testVec[featIndex]
     valueOfFeat = secondDict[key]
-    print('+++', firstStr, 'xxx', secondDict, '---', key, '>>>', valueOfFeat)
+    #print('+++', firstStr, 'xxx', secondDict, '---', key, '>>>', valueOfFeat)
     # 判断分枝是否结束: 判断valueOfFeat是否是dict类型
     if isinstance(valueOfFeat, dict):
         classLabel = classify(valueOfFeat, featLabels, testVec)
@@ -174,6 +182,7 @@ if __name__ == '__main__':
     dataSet, labels = createDataSet()
     featLabels = []
     myTree = createTree(dataSet, labels,featLabels)
+    print(myTree)
     testVec = [0, 1]  # 测试数据
     result = classify(myTree, featLabels, testVec)
     if result == 'yes':
