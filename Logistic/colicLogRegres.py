@@ -130,4 +130,4 @@ def colicSklearn():
 	print('正确率:%f%%' % test_accurcy)
 
 if __name__ == '__main__':
-	colicSklearn()
+	colicTest()
