@@ -28,7 +28,7 @@ if __name__ == '__main__':
     #print(lensesDict)
     # 转为pandas二维数组
     lenses_pd = pd.DataFrame(lensesDict)
-    #print(lenses_pd)
+    # print(lenses_pd)
 
     #序列化 用sklearn库中的LabelEncoder
     le = LabelEncoder()
